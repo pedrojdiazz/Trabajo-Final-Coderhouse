@@ -88,10 +88,10 @@ router.delete("/:pid", (req, res) => {
         const index = products.findIndex(p => p.id === id)
         products.splice(index, 1)
         writeJsonFile(FILE_PATH, products)
-        res.status(200).json({message: `usuario con ID ${id} eliminado`})
+        res.status(200).json({message: `Producto con ID ${id} eliminado`})
     }
     else {
-        res.status(404).json({error: `Usuario con ID ${id} no encontrado`})
+        res.status(404).json({error: `Producto con ID ${id} no encontrado`})
     }
 })
 
