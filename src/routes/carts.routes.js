@@ -7,8 +7,10 @@ const FILE_PATH = "./src/db/carrito.json";
 
 router.post("/", (req, res) => {
     const carts = readJsonFile(FILE_PATH);
-    const { products } = req.body;
+    let { products } = req.body;
     let id;
+    if (!products) products = [];
+    
     try{
         id = carts[carts.length - 1].id + 1
     }
@@ -40,23 +42,21 @@ router.post("/:cid/product/:pid", (req, res) => {
     const pid = parseInt(req.params.pid);
     const carts = readJsonFile(FILE_PATH);
     const cartFound = carts.find(c => c.id === cid);
-    if (cartFound){
-        const cartIndex = carts.findIndex(c => c.id === cid);
-        const productFound = carts[cartIndex]["products"].find(p => p.product === pid)
-        if(productFound){
-            productFound["quantity"] += 1
-            
-        }
-        else{
-            cartFound["products"].push({"product": pid, "quantity": 1})
-        }
-        writeJsonFile(FILE_PATH, carts)
-        res.status(200).json({message: `Producto con id ${pid} agregado al carrito ${cid} con exito!`, carrito: cartFound});
+    if (!cartFound){
+        res.status(404).json({error: `Carrito con el id ${cid} no encontrado`});
+        return;
+    }
+    const cartIndex = carts.findIndex(c => c.id === cid);
+    const productFound = carts[cartIndex]["products"].find(p => p.product === pid);
+    if(productFound){
+        productFound["quantity"] += 1
         
     }
-    else {
-        res.status(404).json({error: `Carrito con el id ${cid} no encontrado`})
+    else{
+        cartFound["products"].push({"product": pid, "quantity": 1})
     }
+    writeJsonFile(FILE_PATH, carts)
+    res.status(200).json({message: `Producto con id ${pid} agregado al carrito ${cid} con exito!`, carrito: cartFound});
 
 })
 export default router;
