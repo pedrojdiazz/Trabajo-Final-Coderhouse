@@ -1,18 +1,5 @@
 [
   {
-    "id": 2,
-    "title": "Mesa",
-    "description": "mesa ratona",
-    "code": "ABC",
-    "price": 100,
-    "status": true,
-    "stock": 12,
-    "category": "Muebles",
-    "thumbnail": [
-      "foto"
-    ]
-  },
-  {
     "id": 3,
     "title": "El señor de los anillos",
     "description": "libro El señor de los anillos",
@@ -34,32 +21,6 @@
     "status": true,
     "stock": 123,
     "category": "Computacion",
-    "thumbnail": [
-      "imagen1.jpg"
-    ]
-  },
-  {
-    "id": 5,
-    "title": "Teclado",
-    "description": "teclado gamer",
-    "code": "1231",
-    "price": 2000,
-    "status": true,
-    "stock": 10,
-    "category": "Computacion",
-    "thumbnail": [
-      "imagen1.jpg"
-    ]
-  },
-  {
-    "id": 6,
-    "title": "silla",
-    "description": "silla oficina",
-    "code": "1231ad",
-    "price": 200000,
-    "status": true,
-    "stock": 10,
-    "category": "Muebles",
     "thumbnail": [
       "imagen1.jpg"
     ]

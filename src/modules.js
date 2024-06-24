@@ -1,14 +1,22 @@
-import fs from "fs";
+import { promises as fs } from "fs";
 
 
-const readJsonFile = (path) => {
-    const data = fs.readFileSync(path);
-    return JSON.parse(data);
+const readJsonFile = async (path) => {
+    try {
+        const data = await fs.readFile(path);
+        return JSON.parse(data);
+    } catch (error) { 
+        throw error;
+    }
 }
 
 
-const writeJsonFile = (path, data) => {
-    fs.writeFileSync(path, JSON.stringify(data, null, 2));
+const writeJsonFile = async (path, data) => {
+    try{
+        await fs.writeFile(path, JSON.stringify(data, null, 2));
+    } catch (error) { 
+        throw error;
+    }
 }
 
 export {writeJsonFile, readJsonFile};
