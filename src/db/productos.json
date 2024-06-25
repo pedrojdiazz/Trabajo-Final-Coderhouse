@@ -1,18 +1,5 @@
 [
   {
-    "id": 3,
-    "title": "El señor de los anillos",
-    "description": "libro El señor de los anillos",
-    "code": "123asd",
-    "price": 1000,
-    "status": true,
-    "stock": 6,
-    "category": "Libros",
-    "thumbnail": [
-      "imagen1.jpg"
-    ]
-  },
-  {
     "id": 4,
     "title": "Mouse",
     "description": "mouse inalambrico",
@@ -24,5 +11,60 @@
     "thumbnail": [
       "imagen1.jpg"
     ]
+  },
+  {
+    "title": "taza",
+    "description": "taza mickey",
+    "price": 200,
+    "code": "111",
+    "stock": 100,
+    "category": "vajilla",
+    "status": true,
+    "thumbnails": [],
+    "id": 5
+  },
+  {
+    "title": "Plato",
+    "description": "Plato decorativo",
+    "price": 150,
+    "code": "112",
+    "stock": 80,
+    "category": "Vajilla",
+    "status": true,
+    "thumbnails": [],
+    "id": 6
+  },
+  {
+    "title": "Vaso",
+    "description": "Vaso de cristal",
+    "price": 100,
+    "code": "113",
+    "stock": 120,
+    "category": "Vajilla",
+    "status": true,
+    "thumbnails": [],
+    "id": 7
+  },
+  {
+    "title": "Cuchillo",
+    "description": "Cuchillo de cocina",
+    "price": 80,
+    "code": "114",
+    "stock": 90,
+    "category": "Utensilios",
+    "status": true,
+    "thumbnails": [],
+    "id": 8
+  },
+  {
+    "title": "taza",
+    "description": "fea",
+    "price": "100",
+    "code": "10ada",
+    "stock": "10",
+    "category": "taza",
+    "status": true,
+    "thumbnails": [],
+    "id": 9
   }
 ]

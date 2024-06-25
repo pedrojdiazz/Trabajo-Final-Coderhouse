@@ -1,15 +1,17 @@
 import { Router} from "express";
 import {writeJsonFile, readJsonFile} from "../modules.js";
 import __dirname from "../utils.js";
+import ProductManager from "../controllers/product-manager.js";
 
 const router = Router();
 const FILE_PATH = __dirname+'/db/productos.json'
+const productManager = new ProductManager(FILE_PATH)
 
 
 router.get("/", async (req, res) => {
     try {
         const splitNum = req.query.limit;
-        const products = await readJsonFile(FILE_PATH);
+        const products = await productManager.loadProducts();
         if(splitNum){
             const productsSlice = products.slice(0, splitNum)
             res.json({message: "ok", productsSlice})
@@ -17,102 +19,87 @@ router.get("/", async (req, res) => {
         }
         res.json({message: "ok", products})
     } catch (error) {
-        throw error;
+        res.status(500).json({
+            error: "Error interno del servidor",
+            message: error
+        });
     }
 });
 
 
     router.get("/:pid", async (req, res) => {
     try{
-        const products = await readJsonFile(FILE_PATH);
         const id = parseInt(req.params.pid);
-        const productFound = products.find(p => p.id === id);
-        if(productFound){
-            const index = products.findIndex(p => p.id === id);
+        const product = await productManager.getProductById(id)
+        if (product){
             res.json({
                 message: "Producto encontrado",
-                response: products[index]
-            })
-        }
-        else {
+                response: product
+                })
+            }
+        else { 
             res.status(404).json({error: `Producto con id ${id} no encontrado`})
         }
     } catch (error) {
-        throw error;
+        res.status(500).json({
+            error: "Error interno del servidor",
+            message: error
+        });
     }
-})
+});
 
 
 router.post("/", async (req, res) => {
+    const newProduct = req.body;
     try {
-        const products = await readJsonFile(FILE_PATH);
         
-        const {title, description, code, price, status, stock, category, thumbnail} = req.body;
-        if(!title || !description || !code || !price || !status || !stock || !category){
-            res.status(400).json({error: "FALTAN CAMPOS PARA AGREGAR UN PRODUCTO NUEVO"})
-            return;
-        }
-        let id;
-        try{
-            id = products[products.length - 1].id + 1
-        }
-        catch(error){
-            id = 1
-        }
-        products.push({id, title, description, code, price, status, stock, category, thumbnail})
-        await writeJsonFile(FILE_PATH, products)
-        res.status(201).json({id})
+        await productManager.addProduct(newProduct);
+        res.status(201).json({
+            message: "Producto agregado exitosamente"
+        })
     } catch (error) {
-        throw error;
-    }
-})
+        
+        res.status(500).json({
+            error: "Error interno del servidor",
+            message: error
+        });
+        }
+});
 
 
 router.put("/:pid", async (req, res) => {
+    const id = parseInt(req.params.pid);
+    const updatedProduct = req.body;
     try{
-        const products = await readJsonFile(FILE_PATH);
-
-        const id = parseInt(req.params.pid);
-        const productFound = products.find(p => p.id === id);
-        if(productFound){
-            const productIndex = products.findIndex(p => p.id === id);
-            const fields = ['title', 'description', 'code', 'price', 'status', 'stock', 'category', 'thumbnail'];
-            fields.forEach(field => {
-                if(req.body[field] !== undefined){
-                    products[productIndex][field] = req.body[field];
-                }
-            })    
-            await writeJsonFile(FILE_PATH, products)
-            res.status(200).json({message: `Producto con ID ${id} actualizado correctamente!`});
-        }
-        else{
-        res.status(404).json({error: `Producto con ID ${id} no encontrado`});
+        const succes = await productManager.updateProduct(id, updatedProduct)
+        if (succes) {
+            res.status(200).json({message: `usuario con ID ${id} actualizado`})}
+        else {
+            res.status(404).json({message: `usuario con ID ${id} no encontrado`})
         }
     }catch (error) {
-        throw error;
-    }
-})
+        res.status(500).json({
+            error: "Error interno del servidor"})}
+});
 
 
 router.delete("/:pid", async (req, res) => {
     try{
-        const products = await readJsonFile(FILE_PATH);
 
         const id = parseInt(req.params.pid);
-        const productFound = products.find(p => p.id === id);
-        if(productFound){
-            const index = products.findIndex(p => p.id === id)
-            products.splice(index, 1)
-            await writeJsonFile(FILE_PATH, products)
-            res.status(200).json({message: `usuario con ID ${id} eliminado`})
-        }
+        const succes = await productManager.deleteProduct(id);
+        if (succes) {
+            res.status(200).json({message: `usuario con ID ${id} eliminado`})}
         else {
-            res.status(404).json({error: `Usuario con ID ${id} no encontrado`})
+            res.status(404).json({message: `usuario con ID ${id} no encontrado`})
         }
-    } catch (error) { 
-        throw error;
+        
+        
+}   catch (error) { 
+        res.status(500).json({
+            error: "Error interno del servidor"})
     }
-})
+});
 
 
 export default router;
