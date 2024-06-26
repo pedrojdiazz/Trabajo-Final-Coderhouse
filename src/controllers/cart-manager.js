@@ -55,15 +55,13 @@ class CartManager {
     async addProductToCart(cartId, productId, quantity = 1) {
         try{
             const cart = await this.getCartById(cartId);
+            if (!cart) return 0;
             const existProduct = cart.products.find(p => p.product === productId);
-
             if (existProduct) {
                 existProduct.quantity += quantity;
             } else {
                 cart.products.push({ product: productId, quantity });
             }
-
-            await this._saveCarts();
             return cart;
     } catch (error) {
         throw error;

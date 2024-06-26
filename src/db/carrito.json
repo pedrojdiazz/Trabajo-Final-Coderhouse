@@ -43,15 +43,28 @@
       {
         "product": 5,
         "quantity": 32
+      },
+      {
+        "product": 55,
+        "quantity": 1
       }
     ]
   },
   {
     "id": 4,
-    "products": []
+    "products": [
+      {
+        "product": 55,
+        "quantity": 2
+      }
+    ]
   },
   {
     "id": 5,
+    "products": []
+  },
+  {
+    "id": 6,
     "products": []
   }
 ]

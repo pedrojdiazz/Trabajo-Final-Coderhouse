@@ -1,16 +1,5 @@
 [
   {
-    "title": "taza",
-    "description": "taza mickey",
-    "price": 200,
-    "code": "111",
-    "stock": 100,
-    "category": "vajilla",
-    "status": true,
-    "thumbnails": [],
-    "id": 5
-  },
-  {
     "title": "Plato",
     "description": "Plato decorativo",
     "price": 150,
@@ -53,5 +42,16 @@
     "status": true,
     "thumbnails": [],
     "id": 10
+  },
+  {
+    "title": "Cuchillo",
+    "description": "Cuchillo de cocina",
+    "price": 80,
+    "code": "1141",
+    "stock": 90,
+    "category": "Utensilios",
+    "status": true,
+    "thumbnails": [],
+    "id": 11
   }
 ]

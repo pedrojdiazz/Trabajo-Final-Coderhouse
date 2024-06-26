@@ -41,11 +41,14 @@ router.post("/:cid/product/:pid", async (req, res) => {
     const pid = parseInt(req.params.pid);
     const quantity = req.body.quantity || 1;
     try {
-        await cartsManager.addProductToCart(cid, pid, quantity)
+        const cart = await cartsManager.addProductToCart(cid, pid, quantity)
+        if (cart){
         res.status(200).json({message: "Producto agregado al carrito"})
+        } else {
+            res.status(404).json({message: `Carrito con el ID ${cid} no encontrado`})
+        }
 
     } catch (error) {
-        console.error("Error al agregar producto al carrito", error);
         res.status(500).json({ error: "Error interno del servidor" });
     }
 });
