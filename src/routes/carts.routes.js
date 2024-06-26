@@ -1,62 +1,53 @@
 import { Router } from "express";
 import {writeJsonFile, readJsonFile} from "../modules.js";
+import __dirname from "../utils.js";
+import CartManager from "../controllers/cart-manager.js";
 
 const router = Router();
-const FILE_PATH = "./src/db/carrito.json";
+const FILE_PATH = __dirname+'/db/carrito.json'
+const cartsManager = new CartManager(FILE_PATH)
 
-
-router.post("/", (req, res) => {
-    const carts = readJsonFile(FILE_PATH);
-    let { products } = req.body;
-    let id;
-    if (!products) products = [];
-    
+router.post("/", async (req, res) => {
     try{
-        id = carts[carts.length - 1].id + 1
-    }
-    catch(error){
-        id = 1
-    }
-    carts.push({id, products});
-    writeJsonFile(FILE_PATH, carts);
-    res.status(201).json({id});
-})
+        let { products } = req.body;
+        if (!products) products = [];
+        await cartsManager.createCart(products)        
+        res.status(201).json({message: 'Carrito creado con exito'});
 
-
-router.get("/:cid", (req, res) => {
-    const carts = readJsonFile(FILE_PATH);
-    const id = parseInt(req.params.cid);
-    const cartFound = carts.find(c => c.id === id);
-    if (cartFound){
-        const cartIndex = carts.findIndex(c => c.id === id);
-        res.status(200).json({message: "Carrito encontrado", carrito: carts[cartIndex]});
-    }
-    else{
-        res.status(404).json({error: `Carrito con el id ${id} no encontrado`});
+    } catch (error) {
+        throw error;
     }
 })
 
 
-router.post("/:cid/product/:pid", (req, res) => {
+router.get("/:cid", async (req, res) => {
+    try {
+        const id = parseInt(req.params.cid);
+        const cartFound = await cartsManager.getCartById(id);
+        if (cartFound){
+            res.status(200).json({message: "Carrito encontrado", carrito: cartFound});
+        }
+        else{
+            res.status(404).json({error: `Carrito con el id ${id} no encontrado`});
+        }
+    } catch (error) {
+        throw error;
+    }
+})
+
+
+router.post("/:cid/product/:pid", async (req, res) => {
     const cid = parseInt(req.params.cid);
     const pid = parseInt(req.params.pid);
-    const carts = readJsonFile(FILE_PATH);
-    const cartFound = carts.find(c => c.id === cid);
-    if (!cartFound){
-        res.status(404).json({error: `Carrito con el id ${cid} no encontrado`});
-        return;
-    }
-    const cartIndex = carts.findIndex(c => c.id === cid);
-    const productFound = carts[cartIndex]["products"].find(p => p.product === pid);
-    if(productFound){
-        productFound["quantity"] += 1
-        
-    }
-    else{
-        cartFound["products"].push({"product": pid, "quantity": 1})
-    }
-    writeJsonFile(FILE_PATH, carts)
-    res.status(200).json({message: `Producto con id ${pid} agregado al carrito ${cid} con exito!`, carrito: cartFound});
+    const quantity = req.body.quantity || 1;
+    try {
+        await cartsManager.addProductToCart(cid, pid, quantity)
+        res.status(200).json({message: "Producto agregado al carrito"})
 
-})
+    } catch (error) {
+        console.error("Error al agregar producto al carrito", error);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+});
+
 export default router;
