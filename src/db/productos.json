@@ -1,9 +1,9 @@
 [
   {
-    "title": "Plato",
-    "description": "Plato decorativo",
-    "price": 150,
-    "code": "112",
+    "title": "Game of throness",
+    "description": "libro game of thrones",
+    "price": 1000,
+    "code": "123a",
     "stock": 80,
     "category": "Vajilla",
     "status": true,
@@ -22,17 +22,6 @@
     "id": 7
   },
   {
-    "title": "taza",
-    "description": "fea",
-    "price": "100",
-    "code": "10ada",
-    "stock": "10",
-    "category": "taza",
-    "status": true,
-    "thumbnails": [],
-    "id": 9
-  },
-  {
     "title": "Cuchillo",
     "description": "Cuchillo de cocina",
     "price": 80,
@@ -42,16 +31,5 @@
     "status": true,
     "thumbnails": [],
     "id": 10
-  },
-  {
-    "title": "Cuchillo",
-    "description": "Cuchillo de cocina",
-    "price": 80,
-    "code": "1141",
-    "stock": 90,
-    "category": "Utensilios",
-    "status": true,
-    "thumbnails": [],
-    "id": 11
   }
 ]
