@@ -31,5 +31,27 @@
     "status": true,
     "thumbnails": [],
     "id": 10
+  },
+  {
+    "title": "Cuchillo",
+    "description": "Cuchillo de cocina",
+    "price": 80,
+    "code": "1141",
+    "stock": 90,
+    "category": "Utensilios",
+    "status": true,
+    "thumbnails": [],
+    "id": 11
+  },
+  {
+    "title": "Cuchillo",
+    "description": "Cuchillo de cocina",
+    "price": 80,
+    "code": "1141a",
+    "stock": 90,
+    "category": "Utensilios",
+    "status": true,
+    "thumbnails": [],
+    "id": 12
   }
 ]

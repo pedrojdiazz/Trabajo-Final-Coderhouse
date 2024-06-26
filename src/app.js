@@ -14,11 +14,11 @@ const PRODUCTS_FILE_PATH = __dirname+'/db/productos.json'
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("./src/public"));
+app.use(express.static(__dirname+"/public"));
 
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
-app.set("views", "./src/views");
+app.set("views", __dirname+"/views");
 
 app.use("/api/products", productsRoutes);
 app.use("/api/carts", cartsRoutes)
@@ -35,10 +35,10 @@ io.on("connection", async (socket) => {
     socket.emit("products", await productManager.loadProducts());
 
     socket.on("deleteProduct", async (id) => {
-        productManager.deleteProduct(id)
+        await productManager.deleteProduct(id)
     })
     socket.on("addProduct", async (product) => {
-        productManager.addProduct(product);
+        await productManager.addProduct(product);
         
     })
 })
