@@ -1,5 +1,4 @@
 import { Router } from "express";
-import {writeJsonFile, readJsonFile} from "../modules.js";
 import __dirname from "../utils.js";
 import CartManager from "../controllers/cart-manager.js";
 

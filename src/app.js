@@ -4,7 +4,6 @@ import cartsRoutes from "./routes/carts.routes.js"
 import { engine } from "express-handlebars";
 import { Server } from "socket.io";
 import viewsRouter from "./routes/views.router.js"
-import { readJsonFile, writeJsonFile } from "./modules.js";
 import __dirname from "./utils.js";
 import ProductManager from "./controllers/product-manager.js";
 

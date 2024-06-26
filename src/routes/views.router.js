@@ -1,16 +1,17 @@
 import { Router } from "express";
-import {writeJsonFile, readJsonFile} from "../modules.js";
 import __dirname from "../utils.js";
+import ProductManager from "../controllers/product-manager.js";
 
-const router = Router()
 const PRODUCTS_FILE_PATH = __dirname+'/db/productos.json'
+const productManager = new ProductManager(PRODUCTS_FILE_PATH)
+const router = Router()
 
 router.get("/realtimeproducts", async (req, res) => {
     res.render("realtimeproducts");
 })
 
 router.get("/", async (req, res) => {
-    const products = await readJsonFile(PRODUCTS_FILE_PATH)
+    const products = await productManager.loadProducts()
     res.render("home", {products});
 })
 
