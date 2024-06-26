@@ -53,10 +53,14 @@ router.post("/", async (req, res) => {
     const newProduct = req.body;
     try {
         
-        await productManager.addProduct(newProduct);
+        const succes = await productManager.addProduct(newProduct);
+        if (succes) {
         res.status(201).json({
             message: "Producto agregado exitosamente"
         })
+    }else {
+        res.status(400).json({message: "Error en la carga del producto"})
+    }
     } catch (error) {
         
         res.status(500).json({

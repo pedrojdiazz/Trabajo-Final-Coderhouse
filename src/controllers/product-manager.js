@@ -13,11 +13,11 @@ class ProductManager {
             await this.loadProducts();
 
             if (!title || !description || !price || !code || !stock || !category) {
-                throw new Error("Todos los campos son obligatorios");
+                return 0;
             }
 
             if (this.products.some(item => item.code === code)) {
-                throw new Error("El código debe ser único");
+                return 0;
             }
 
             const newProduct = {
@@ -39,6 +39,7 @@ class ProductManager {
 
             this.products.push(newProduct);
             await this._saveProducts(this.products);
+            return 1
         } catch (error) {
             throw error;
         }

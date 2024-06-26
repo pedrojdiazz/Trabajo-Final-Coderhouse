@@ -31,7 +31,6 @@ const httpServer = app.listen(PORT, () => {
 const productManager = new ProductManager(PRODUCTS_FILE_PATH)
 const io = new Server(httpServer);
 io.on("connection", async (socket) => {
-    console.log("usuario conectado")
 
     socket.emit("products", await productManager.loadProducts());
 

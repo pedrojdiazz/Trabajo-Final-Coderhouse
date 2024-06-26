@@ -1,18 +1,5 @@
 [
   {
-    "id": 4,
-    "title": "Mouse",
-    "description": "mouse inalambrico",
-    "code": "ABCDEF",
-    "price": 1500,
-    "status": true,
-    "stock": 123,
-    "category": "Computacion",
-    "thumbnail": [
-      "imagen1.jpg"
-    ]
-  },
-  {
     "title": "taza",
     "description": "taza mickey",
     "price": 200,
@@ -46,17 +33,6 @@
     "id": 7
   },
   {
-    "title": "Cuchillo",
-    "description": "Cuchillo de cocina",
-    "price": 80,
-    "code": "114",
-    "stock": 90,
-    "category": "Utensilios",
-    "status": true,
-    "thumbnails": [],
-    "id": 8
-  },
-  {
     "title": "taza",
     "description": "fea",
     "price": "100",
@@ -66,5 +42,16 @@
     "status": true,
     "thumbnails": [],
     "id": 9
+  },
+  {
+    "title": "Cuchillo",
+    "description": "Cuchillo de cocina",
+    "price": 80,
+    "code": "114",
+    "stock": 90,
+    "category": "Utensilios",
+    "status": true,
+    "thumbnails": [],
+    "id": 10
   }
 ]
