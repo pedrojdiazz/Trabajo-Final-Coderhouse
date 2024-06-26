@@ -90,6 +90,7 @@ router.put("/:pid", async (req, res) => {
 router.delete("/:pid", async (req, res) => {
     try{
 
+
         const id = parseInt(req.params.pid);
         const succes = await productManager.deleteProduct(id);
         if (succes) {
@@ -102,6 +103,7 @@ router.delete("/:pid", async (req, res) => {
 }   catch (error) { 
         res.status(500).json({
             error: "Error interno del servidor"})
+
     }
 });
 
