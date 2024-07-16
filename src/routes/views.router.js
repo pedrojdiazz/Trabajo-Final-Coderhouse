@@ -1,9 +1,8 @@
 import { Router } from "express";
 import __dirname from "../utils.js";
-import ProductManager from "../controllers/product-manager.js";
+import ProductManager from "../dao/db/product-manager.js";
 
-const PRODUCTS_FILE_PATH = __dirname+'/db/productos.json'
-const productManager = new ProductManager(PRODUCTS_FILE_PATH)
+const productManager = new ProductManager
 const router = Router()
 
 router.get("/realtimeproducts", async (req, res) => {
@@ -11,7 +10,7 @@ router.get("/realtimeproducts", async (req, res) => {
 })
 
 router.get("/", async (req, res) => {
-    const products = await productManager.loadProducts()
+    const products = await productManager.getProducts()
     res.render("home", {products});
 })
 
