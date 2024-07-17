@@ -47,6 +47,7 @@ const productSchema = new mongoose.Schema({
     }
 });
 
+
 productSchema.plugin(mongoosePaginate);
 
 const ProductModel = new mongoose.model(productsCollection, productSchema);

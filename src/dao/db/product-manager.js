@@ -57,6 +57,17 @@ class ProductManager {
         }
     }
 
+    async getProductById(productId) {
+        try {
+          const product = await ProductModel.findById(productId);
+          if (!product) {
+            throw new Error('Producto no encontrado');
+          }
+          return product;
+        } catch (error) {
+          throw error;
+        }
+      }
 
 
     async updateProduct(id, updatedProduct) {
@@ -72,7 +83,6 @@ class ProductManager {
     async deleteProduct(id) {
         try {
             const deleted = await ProductModel.findByIdAndDelete(id);
-            console.log(deleted);
             if (!deleted) return null;
             return 1;
         } catch (error) {

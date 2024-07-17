@@ -30,15 +30,15 @@ class CartManager {
 
     async addProductToCart(cartId, productId, quantity = 1) {
         try {
-            const productQuantity = await this.updateProductQuantity(cartId, productId, quantity)
-            if (productQuantity){
-                 return productQuantity
+            const productInCart = await this.updateProductQuantity(cartId, productId, quantity)
+            if (productInCart) {
+                 return productInCart
                 }
-            else if(productQuantity === -1){
+            else if(productInCart === -1) {
                  return -1
                 }
 
-            else{
+            else {
                 const result = await CartModel.findOneAndUpdate(
                     { _id: cartId },
                         { 
@@ -57,15 +57,16 @@ class CartManager {
     async deleteProductFromCart(cartId, productId) {
         try {
             const existProduct = await ProductModel.exists({_id : productId});
-            if (!existProduct) return -1;
+            if (!existProduct) {
+                return -1
+                }
             const result = await CartModel.findOneAndUpdate(
                 { _id: cartId },
                 {
                     $pull: {
                         products: { product: productId}
                     }
-                },
-                { new: true }
+                }
             )
             return result;
 
@@ -76,17 +77,19 @@ class CartManager {
     }
 
     async addProductListToCart(cartId, products) {
+        // Esta funcion itera el array con productos y se los pasa como parametros al metodo addProductToCart,
+        //  guardando en la promesa el resultado de cada una de las llamadas a la funcion,
+        //  para luego retornar cuales fueron los ids que no se pudieron agregar al carrito
+        
         try {
-            // Esta funcion itera el array con productos y se los pasa como parametros al metodo addProductToCart, guardando en la promesa el resultado de cada una de las 
-            // llamadas a la funcion, para luego retornar cuales fueron los ids que no se pudieron agregar al carrito
-            
-            const results = await Promise.all(products.map(async product =>  {
-                try{
+            const results = await Promise.all(products.map(async product => {
+                try {
                     const result = await this.addProductToCart(cartId, product.product, product.quantity);
                     return { product: product.product, success: result && result !== -1 };
                 } catch (error) {
                     return { product: product.product, success: false};
-                }}))
+                }
+            }));
 
             return results;
 
@@ -98,23 +101,26 @@ class CartManager {
     async updateProductQuantity(cartId, productId, quantity = 1) {
         try {
             const existProduct = await ProductModel.exists({_id : productId});
-            if (!existProduct) return -1;
-                const cart = await CartModel.findOne({ _id: cartId, 'products.product': productId });
-                if (cart) {
-                    const result = await CartModel.findOneAndUpdate(
-                        { _id: cartId, 'products.product': productId },
-    
-                        { 
-                            $inc: { 'products.$.quantity': quantity }
-                        },
-    
-                        {new: true});
-    
-                    return result;
-    
-                } else {
-                    return 0;
+
+            if (!existProduct) {
+                return -1
                 }
+            const cart = await CartModel.findOne({ _id: cartId, 'products.product': productId });
+            
+            if (cart) {
+                const result = await CartModel.findOneAndUpdate(
+                    { _id: cartId, 'products.product': productId },
+
+                    { 
+                        $inc: { 'products.$.quantity': quantity }
+                    },
+
+                    {new: true});
+
+                return result;
+            } else {
+                return 0;
+            }
 
         } catch (error) { 
             throw error;
@@ -128,7 +134,6 @@ class CartManager {
                 {
                     $set: { products: []}
                 })
-                console.log(result);
             return result;
         } catch (error) {
             throw error;
