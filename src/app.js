@@ -5,7 +5,9 @@ import { engine } from "express-handlebars";
 import { Server } from "socket.io";
 import viewsRouter from "./routes/views.router.js"
 import __dirname from "./utils.js";
-import ProductManager from "./controllers/product-manager.js";
+import ProductManager from "./dao/db/product-manager.js";
+import "./database.js";
+
 
 const PORT = 8080;
 const app = express();
@@ -31,7 +33,7 @@ const productManager = new ProductManager(PRODUCTS_FILE_PATH)
 const io = new Server(httpServer);
 io.on("connection", async (socket) => {
 
-    socket.emit("products", await productManager.loadProducts());
+    socket.emit("products", await productManager.getProducts());
 
     socket.on("deleteProduct", async (id) => {
         await productManager.deleteProduct(id)
