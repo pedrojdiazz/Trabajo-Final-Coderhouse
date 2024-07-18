@@ -29,6 +29,7 @@ class ProductManager {
     }
     async getProducts({limit, page, sort, query} = {}) {
         try {
+            
             let queryOptions = {};
             if (query) {
                 queryOptions = { category: query };
@@ -59,13 +60,13 @@ class ProductManager {
 
     async getProductById(productId) {
         try {
-          const product = await ProductModel.findById(productId);
-          if (!product) {
-            throw new Error('Producto no encontrado');
+            const product = await ProductModel.findById(productId);
+            if (!product) {
+                return null;
           }
-          return product;
+            return product;
         } catch (error) {
-          throw error;
+            throw error;
         }
       }
 

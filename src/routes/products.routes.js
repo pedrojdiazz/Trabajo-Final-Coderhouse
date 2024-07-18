@@ -22,7 +22,26 @@ router.get("/", async (req, res) => {
     }
 });
 
-
+router.get("/:pid", async (req, res) => {
+    try{
+        const id = req.params.pid;
+        const product = await productManager.getProductById(id)
+        if (product){
+            res.json({
+                message: "Producto encontrado",
+                response: product
+                })
+            }
+        else { 
+            res.status(404).json({error: `Producto con id ${id} no encontrado`})
+        }
+    } catch (error) {
+        res.status(500).json({
+            error: "Error interno del servidor" + error,
+            message: error
+        });
+    }
+});
 
 
 router.post("/", async (req, res) => {

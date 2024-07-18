@@ -11,7 +11,7 @@ const renderProductos = (data) => {
         const card = document.createElement("div");
 
         card.innerHTML = `  <p>Producto: ${item.title}</p>
-                            <p>Id: ${item.id}</p>
+                            <p>Id: ${item._id}</p>
                             <p>Descripcion: ${item.description}</p>
                             <p>Precio: ${item.price}</p>
                             <p>Stock: ${item.stock}</p>
@@ -21,7 +21,7 @@ const renderProductos = (data) => {
                             
         productsContainer.appendChild(card);
         card.querySelector("button").addEventListener("click", () => {
-            deleteProduct(item.id);
+            deleteProduct(item._id);
         })
     })
 
