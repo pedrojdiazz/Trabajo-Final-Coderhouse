@@ -8,10 +8,8 @@ import __dirname from "./utils.js";
 import ProductManager from "./dao/db/product-manager.js";
 import "./database.js";
 
-
 const PORT = 8080;
 const app = express();
-const PRODUCTS_FILE_PATH = __dirname+'/db/productos.json' 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -29,11 +27,12 @@ const httpServer = app.listen(PORT, () => {
     console.log(`Servidor escuchando en puerto ${PORT}`)
 })
 
-const productManager = new ProductManager(PRODUCTS_FILE_PATH)
+const productManager = new ProductManager
 const io = new Server(httpServer);
 io.on("connection", async (socket) => {
+    const products = await productManager.getProducts();
 
-    socket.emit("products", await productManager.getProducts());
+    socket.emit("products", products.payload);
 
     socket.on("deleteProduct", async (id) => {
         await productManager.deleteProduct(id)
