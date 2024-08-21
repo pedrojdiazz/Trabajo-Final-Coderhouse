@@ -1,5 +1,4 @@
-import { Router } from "express";
-import __dirname from "../utils.js";
+import { application, Router } from "express";
 import ProductManager from "../dao/db/product-manager.js";
 import CartManager from "../dao/db/cart-manager.js";
 const productManager = new ProductManager
@@ -12,14 +11,14 @@ router.get("/realtimeproducts", async (req, res) => {
 
 router.get("/products", async (req, res) => {
     try {
-        const { page = 1, limit = 2 } = req.query;
+        const { page = 1, limit = 10  } = req.query;
         const products = await productManager.getProducts({
             page: parseInt(page),
             limit: parseInt(limit)
         });
         let arrayProducts = products.payload.map( product => {
-            const rest = product.toObject();
-            return rest;
+            const productResult = product.toObject();
+            return productResult;
         })
         res.render("home", {
             products: arrayProducts,
@@ -39,6 +38,20 @@ router.get("/products", async (req, res) => {
     }
     
 });
+
+
+router.get("/products/:pid", async (req, res) => {
+    try {
+      const productId = req.params.pid;
+      let product = await productManager.getProductById(productId);
+      product = product.toObject();
+      
+      res.render("product-details", { product });
+    } catch (error) {
+      res.status(500).json({ message: "Error interno del servidor"+error });
+    }
+  });
+
 
 router.get("/carts/:cid", async (req, res) => {
     const cartId = req.params.cid;
@@ -61,16 +74,13 @@ router.get("/carts/:cid", async (req, res) => {
     }
  });
 
-router.get("/products/:pid", async (req, res) => {
-    try {
-      const productId = req.params.pid;
-      let product = await productManager.getProductById(productId);
-      product = product.toObject();
-      
-      res.render("product-details", { product });
-    } catch (error) {
-      res.status(500).json({ message: "Error interno del servidor"+error });
-    }
-  });
+router.get("/login", (req, res) => {
+    res.render("login"); 
+})
+
+router.get("/register", (req, res) => {
+    res.render("register"); 
+})
+
 
 export default router;

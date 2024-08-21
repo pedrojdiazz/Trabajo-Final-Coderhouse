@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import configObject from "./config/config.js";
 
-mongoose.connect("mongodb+srv://petrosdiaz:coder@cluster0.wiip6yo.mongodb.net/Ecommerce")
+mongoose.connect(configObject.MONGO_URI)
     .then(() => console.log("Conexión exitosa con la base de datos"))
     .catch(() => console.log("Error al conectar con la base de datos"))
 
