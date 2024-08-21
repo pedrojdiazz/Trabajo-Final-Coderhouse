@@ -1,0 +1,70 @@
+h1 {
+    text-align: center;
+    color: #333;
+    font-family: Arial, sans-serif;
+    margin-bottom: 20px;
+}
+
+/* Estilos para cada contenedor de producto */
+div {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/* Estilo para los títulos de productos */
+h2 {
+    color: #555;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilo para la descripción y otros detalles del producto */
+p {
+    margin: 5px 0;
+    font-family: Arial, sans-serif;
+    color: #666;
+}
+
+/* Estilo específico para el precio */
+p:nth-of-type(2) {
+    font-weight: bold;
+    color: #000;
+}
+
+/* Estilo para el botón de detalles */
+button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* Estilo para los enlaces de paginación */
+div[style="margin-top: 10px;"] a {
+    text-decoration: none;
+    color: #007bff;
+    margin-right: 10px;
+    font-family: Arial, sans-serif;
+}
+
+div[style="margin-top: 10px;"] a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo para el texto de la paginación */
+p {
+    text-align: center;
+    margin-top: 10px;
+    font-family: Arial, sans-serif;
+}

@@ -1,5 +1,4 @@
-import { Router} from "express";
-import __dirname from "../utils.js";
+import { Router } from "express";
 import ProductManager from "../dao/db/product-manager.js";
 
 const router = Router();
@@ -86,7 +85,6 @@ router.put("/:pid", async (req, res) => {
 
 router.delete("/:pid", async (req, res) => {
     try{
-
 
         const succes = await productManager.deleteProduct(req.params.pid);
         if (succes) {

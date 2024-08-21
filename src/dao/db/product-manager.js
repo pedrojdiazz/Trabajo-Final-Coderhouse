@@ -38,7 +38,7 @@ class ProductManager {
             const sortOptions = {};
             if (sort) {
                 if (sort === 'asc' || sort === 'desc') {
-                    sortOptions.price = sort === 'asc' ? 1 : -1;
+                    sortOptions.price = (sort === 'asc') ? 1 : -1;
                 }
             }
             const products = await ProductModel.paginate(queryOptions, {limit: parseInt(limit) || 10, page: parseInt(page) || 1, sort: sortOptions})
