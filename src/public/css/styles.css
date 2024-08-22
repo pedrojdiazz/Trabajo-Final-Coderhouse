@@ -1,41 +1,57 @@
-h1 {
+/* Estilo para los títulos principales */
+h1, h2 {
     text-align: center;
     color: #333;
     font-family: Arial, sans-serif;
     margin-bottom: 20px;
 }
 
-/* Estilos para cada contenedor de producto */
+/* Estilo para contenedores generales */
 div {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
     border: 1px solid #ddd;
-    padding: 15px;
-    margin: 15px 0;
     border-radius: 8px;
     background-color: #f9f9f9;
 }
 
-/* Estilo para los títulos de productos */
+/* Estilo para los títulos de productos y secciones */
 h2 {
     color: #555;
     font-size: 1.5em;
-    margin-bottom: 10px;
     font-family: Arial, sans-serif;
 }
 
-/* Estilo para la descripción y otros detalles del producto */
-p {
-    margin: 5px 0;
+/* Estilo para la descripción y otros detalles */
+p, label {
+    margin: 10px 0;
     font-family: Arial, sans-serif;
     color: #666;
+    font-size: 1em;
 }
 
-/* Estilo específico para el precio */
-p:nth-of-type(2) {
+/* Estilo específico para el precio en la vista de productos */
+p:nth-of-type(3) {
     font-weight: bold;
     color: #000;
+    font-size: 1.2em;
 }
 
-/* Estilo para el botón de detalles */
+/* Estilo para inputs en formularios */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"] {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilo para botones */
 button {
     background-color: #28a745;
     color: white;
@@ -44,10 +60,27 @@ button {
     border-radius: 5px;
     cursor: pointer;
     font-family: Arial, sans-serif;
+    margin-top: 10px;
+    width: 20%;
 }
 
 button:hover {
     background-color: #218838;
+}
+
+/* Estilo para enlaces */
+a {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #007bff;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 /* Estilo para los enlaces de paginación */
