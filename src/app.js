@@ -39,22 +39,21 @@ const httpServer = app.listen(PORT, () => {
     console.log(`Servidor escuchando en puerto ${PORT}`)
 })
 
-const productManager = new ProductManager();
 const io = new Server(httpServer);
 
 io.on("connection", async (socket) => {
-    const products = await productManager.getProducts();
+    const products = await ProductManager.getProducts();
     socket.emit("products", products.payload);
 
     socket.on("deleteProduct", async (id) => {
-        await productManager.deleteProduct(id);
-        const updatedProducts = await productManager.getProducts();
+        await ProductManager.deleteProduct(id);
+        const updatedProducts = await ProductManager.getProducts();
         io.emit("products", updatedProducts.payload);
     });
 
     socket.on("addProduct", async (product) => {
-        await productManager.addProduct(product);
-        const updatedProducts = await productManager.getProducts();
+        await ProductManager.addProduct(product);
+        const updatedProducts = await ProductManager.getProducts();
         io.emit("products", updatedProducts.payload);
     });
 });

@@ -140,4 +140,4 @@ class CartManager {
         }
 }}
 
-export default CartManager;
+export default new CartManager();

@@ -2,13 +2,12 @@ import { Router } from "express";
 import ProductManager from "../dao/db/product-manager.js";
 
 const router = Router();
-const productManager = new ProductManager
 
 
 router.get("/", async (req, res) => {
     try {
         const { limit, page, sort, query } = req.query;
-        const products = await productManager.getProducts({limit, page, sort, query});
+        const products = await ProductManager.getProducts({limit, page, sort, query});
         res.json({
             status: 'success',
             ...products
@@ -24,7 +23,7 @@ router.get("/", async (req, res) => {
 router.get("/:pid", async (req, res) => {
     try{
         const id = req.params.pid;
-        const product = await productManager.getProductById(id)
+        const product = await ProductManager.getProductById(id)
         if (product){
             res.json({
                 message: "Producto encontrado",
@@ -47,7 +46,7 @@ router.post("/", async (req, res) => {
     const newProduct = req.body;
     try {
         
-        const succes = await productManager.addProduct(newProduct);
+        const succes = await ProductManager.addProduct(newProduct);
         if (!succes) {
             res.status(400).json({message: "El producto ya se encuentra cargado"})
         }
@@ -71,7 +70,7 @@ router.post("/", async (req, res) => {
 
 router.put("/:pid", async (req, res) => {
     try{
-        const succes = await productManager.updateProduct(req.params.pid, req.body)
+        const succes = await ProductManager.updateProduct(req.params.pid, req.body)
         if (!succes) {
             res.status(404).json({message: `Producto no encontrado`})}
         else {
@@ -86,7 +85,7 @@ router.put("/:pid", async (req, res) => {
 router.delete("/:pid", async (req, res) => {
     try{
 
-        const succes = await productManager.deleteProduct(req.params.pid);
+        const succes = await ProductManager.deleteProduct(req.params.pid);
         if (succes) {
             res.status(200).json({message: `Producto eliminado`})}
         else {

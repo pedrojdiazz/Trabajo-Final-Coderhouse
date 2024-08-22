@@ -1,8 +1,6 @@
 import { application, Router } from "express";
 import ProductManager from "../dao/db/product-manager.js";
 import CartManager from "../dao/db/cart-manager.js";
-const productManager = new ProductManager
-const cartManager = new CartManager
 const router = Router()
 
 router.get("/realtimeproducts", async (req, res) => {
@@ -12,7 +10,7 @@ router.get("/realtimeproducts", async (req, res) => {
 router.get("/products", async (req, res) => {
     try {
         const { page = 1, limit = 10  } = req.query;
-        const products = await productManager.getProducts({
+        const products = await ProductManager.getProducts({
             page: parseInt(page),
             limit: parseInt(limit)
         });
@@ -43,7 +41,7 @@ router.get("/products", async (req, res) => {
 router.get("/products/:pid", async (req, res) => {
     try {
       const productId = req.params.pid;
-      let product = await productManager.getProductById(productId);
+      let product = await ProductManager.getProductById(productId);
       product = product.toObject();
       
       res.render("product-details", { product });
@@ -57,7 +55,7 @@ router.get("/carts/:cid", async (req, res) => {
     const cartId = req.params.cid;
  
     try {
-       const cart = await cartManager.getCartById(cartId);
+       const cart = await CartManager.getCartById(cartId);
  
        if (!cart) {
           return res.status(404).json({ error: "Carrito no encontrado" });

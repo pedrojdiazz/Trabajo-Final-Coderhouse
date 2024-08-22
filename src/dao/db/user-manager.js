@@ -1,7 +1,6 @@
 import UserModel from "../../models/users.model.js";
 import CartManager from "./cart-manager.js";
 
-const cartManager = new CartManager
 
 class UserManager {
     
@@ -19,7 +18,7 @@ class UserManager {
                 email,
                 age,
                 password,
-                cart: await cartManager.createCart(),
+                cart: await CartManager.createCart(),
                 role
             })
 
@@ -42,4 +41,4 @@ class UserManager {
     }
 }
 
-export default UserManager
+export default new UserManager();

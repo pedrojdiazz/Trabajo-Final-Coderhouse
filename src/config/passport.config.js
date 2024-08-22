@@ -9,7 +9,6 @@ import configObject from '../config/config.js';
 const LocalStrategy = local.Strategy;
 const JWTStrategy = jwt.Strategy;
 const ExtractJwt = jwt.ExtractJwt;
-const userManager = new UserManager
 
 const initializePassport = () => {
    
@@ -19,7 +18,7 @@ const initializePassport = () => {
             const { first_name, last_name, age } = req.body;
 
             try {
-                const user = await userManager.addUser({first_name, last_name, email, age, password: createHash(password)});
+                const user = await UserManager.addUser({first_name, last_name, email, age, password: createHash(password)});
                 if (user === -1) return done(null, false, {message: 'Valores incompletos para el registro de usuario'});
                 
                 if (!user) return done(null, false, {message: 'El usuario ya existe'});
@@ -37,7 +36,7 @@ const initializePassport = () => {
         {usernameField: 'email'}, 
         async (email, password, done) => {
             try {
-                const user = await userManager.getUserByEmail(email);
+                const user = await UserManager.getUserByEmail(email);
                 if (!user) return done(null, false, {message: 'Usuario no encontrado'});
                 
                 if (!isValidPassword(user, password)) return done(null, false, {message: 'Contraseña incorrecta'});
