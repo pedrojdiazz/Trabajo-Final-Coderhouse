@@ -3,12 +3,11 @@ import CartManager from "../dao/db/cart-manager.js";
 
 const router = Router();
 
-const cartsManager = new CartManager
 
 router.post("/", async (req, res) => {
     try{
 
-        await cartsManager.createCart()        
+        await CartManager.createCart()        
         res.status(201).json({message: 'Carrito creado con exito'});
 
     } catch (error) {
@@ -20,7 +19,7 @@ router.post("/", async (req, res) => {
 router.get("/:cid", async (req, res) => {
     try {
         const id = req.params.cid;
-        const cartFound = await cartsManager.getCartById(id);
+        const cartFound = await CartManager.getCartById(id);
         if (cartFound){
             res.status(200).json({message: "Carrito encontrado", carrito: cartFound});
         }
@@ -37,7 +36,7 @@ router.post("/:cid/products/:pid", async (req, res) => {
     const { cid, pid } = req.params;
     const quantity = req.body.quantity || 1;
     try {
-        const cart = await cartsManager.addProductToCart(cid, pid, quantity)
+        const cart = await CartManager.addProductToCart(cid, pid, quantity)
         
         if (cart === -1){
             res.status(404).json({message: `Producto con el ID ${pid} no encontrado`})
@@ -57,7 +56,7 @@ router.post("/:cid/products/:pid", async (req, res) => {
 router.delete('/:cid/products/:pid', async (req, res) => {
     const { cid, pid } = req.params;
     try {
-        const cart = await cartsManager.deleteProductFromCart(cid, pid);
+        const cart = await CartManager.deleteProductFromCart(cid, pid);
 
         if (cart === -1){
             res.status(404).json({message: `Producto con el ID ${pid} no encontrado`})
@@ -75,7 +74,7 @@ router.put('/:cid', async (req, res) => {
     const cid = req.params.cid;
     const products = req.body;
     try {
-        const cart = await cartsManager.addProductListToCart(cid, products);
+        const cart = await CartManager.addProductListToCart(cid, products);
         if (cart.some(elem => !elem.success)){
             res.status(404).json({
                 message: `Hubo un error al agregar algunos productos `,
@@ -94,7 +93,7 @@ router.put('/:cid/products/:pid', async (req, res) => {
     const { cid, pid } = req.params;
     const quantity = req.body.quantity || 1;
     try {
-        const cart = await cartsManager.updateProductQuantity(cid, pid, quantity)
+        const cart = await CartManager.updateProductQuantity(cid, pid, quantity)
         
         if (cart === -1){
             res.status(404).json({message: `Producto con el ID ${pid} no encontrado`})
@@ -114,7 +113,7 @@ router.put('/:cid/products/:pid', async (req, res) => {
 router.delete('/:cid', async (req, res) => {
     const cid = req.params.cid;
     try {
-        const cart = await cartsManager.clearCartProducts(cid);
+        const cart = await CartManager.clearCartProducts(cid);
         if (!cart){
             res.status(404).json({message: `Carrito con el ID ${cid} no encontrado`})
         } else {
