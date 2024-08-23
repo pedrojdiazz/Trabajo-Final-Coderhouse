@@ -1,13 +1,16 @@
 import { application, Router } from "express";
 import ProductManager from "../dao/db/product-manager.js";
 import CartManager from "../dao/db/cart-manager.js";
+import { AuthHandler } from "../utils.js";
+
+const authHandler = new AuthHandler();
 const router = Router()
 
 router.get("/realtimeproducts", async (req, res) => {
     res.render("realtimeproducts");
 })
 
-router.get("/products", async (req, res) => {
+router.get("/products", authHandler.optionalAuthMiddleware("jwt", { session: false }), async (req, res) => {
     try {
         const { page = 1, limit = 10  } = req.query;
         const products = await ProductManager.getProducts({
@@ -15,11 +18,11 @@ router.get("/products", async (req, res) => {
             limit: parseInt(limit)
         });
         let arrayProducts = products.payload.map( product => {
-            const productResult = product.toObject();
-            return productResult;
+            return product.toObject();
         })
         res.render("home", {
             products: arrayProducts,
+            user: req.user,
             hasPrevPage: products.hasPrevPage,
             hasNextPage: products.hasNextPage,
             prevPage: products.prevPage,
@@ -29,6 +32,7 @@ router.get("/products", async (req, res) => {
             prevLink: products.prevLink,
             nextLink: products.nextLink
             });
+
     } catch (error) {
         res.status(500).json({
             error: "Error interno del servidor"
@@ -65,8 +69,7 @@ router.get("/carts/:cid", async (req, res) => {
           quantity: item.quantity
        }));
  
- 
-       res.render("carts", { products: productsInCart });
+       res.render("carts", { products: productsInCart, cartId: cartId });
     } catch (error) {
        res.status(500).json({ error: "Error interno del servidor"+ error});
     }
@@ -79,6 +82,26 @@ router.get("/login", (req, res) => {
 router.get("/register", (req, res) => {
     res.render("register"); 
 })
+
+router.get("/profile", authHandler.passportCallMiddleware("jwt", { session: false }), authHandler.authorizationMiddleware("user"), async (req, res) => {
+    try {
+
+        const cart = await CartManager.getCartById(req.user.cart_id);
+        const productsInCart = cart.products.map(item => ({
+            product: item.product.title,
+            quantity: item.quantity
+         }));
+        res.render('profile', {
+            user: {
+                ...req.user,
+                cart: productsInCart
+            }
+        });
+
+    } catch (error) {
+        res.status(500).send('Error al cargar el perfil');
+    }
+});
 
 
 export default router;

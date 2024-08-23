@@ -1,10 +1,17 @@
+<header>
+    <a href="/products">Ir a Productos</a>
+</header>
+
 <h2>Login</h2>
-<form action="/api/sessions/login" method="POST">
+<form action="/api/sessions/login" class="container" method="POST">
     <label for="email">Email:</label>
-    <input type="email" required name="email">
+    <input type="email" id="email" required name="email">
 
     <label for="password">Password:</label>
-    <input type="password" name="password" required>
+    <input type="password" id="password" name="password" required>
 
-    <button type="submit">Login</button>
+    <button type="submit" class="button">Login</button>
 </form>
+<a href="register">
+    <button class="button">Register</button>
+</a>

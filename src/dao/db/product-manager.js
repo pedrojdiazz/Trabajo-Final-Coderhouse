@@ -9,6 +9,7 @@ class ProductManager {
             const existProduct = await ProductModel.findOne({code: code});
 
             if (existProduct) return null;
+            
             const newProduct = new ProductModel({
                 title,
                 description,
@@ -27,6 +28,7 @@ class ProductManager {
             throw error;
         }
     }
+
     async getProducts({limit, page, sort, query} = {}) {
         try {
             

@@ -11,14 +11,14 @@ class UserManager {
             const existUser = await UserModel.findOne({email: email})
 
             if (existUser) return null
-            
+            const cart = await CartManager.createCart();
             const newUser = new UserModel({
                 first_name,
                 last_name,
                 email,
                 age,
                 password,
-                cart: await CartManager.createCart(),
+                cart: cart._id,
                 role
             })
 
