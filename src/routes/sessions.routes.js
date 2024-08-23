@@ -1,33 +1,27 @@
 import { Router } from "express";
-import { passportCall, authorization, handleLogin} from "../utils.js";
+import { AuthHandler } from "../utils.js";
+import ProductManager from "../dao/db/product-manager.js";
+import CartManager from "../dao/db/cart-manager.js";
 const router = Router();
+const authHandler = new AuthHandler();
 
 
-router.post('/register', passportCall("register", { session: false }), async (req, res) => {
+router.post('/register', authHandler.passportCallMiddleware("register", { session: false }), async (req, res) => {
     try {
-        handleLogin(req.user, res);
+        authHandler.createUserToken(req.user, res);
     } catch (error) {
         return res.status(500).json({ message: 'Error en el registro', error });
     }
 });
 
 
-router.post('/login', passportCall("login", { session: false }), (req, res) => {
+router.post('/login', authHandler.passportCallMiddleware("login", { session: false }), (req, res) => {
     try {
-        handleLogin(req.user, res);
+        authHandler.createUserToken(req.user, res);
     } catch (error) {
         return res.status(500).json({ message: 'Error en el login', error });
     }
 });
-
-
-router.get("/current", passportCall("jwt", { session: false }), authorization("user"), (req, res) => {
-    if (req.user) {
-        res.render("profile", { user: req.user });
-    } else {
-        res.status(401).send("No autorizado");
-    }
-})
 
 
 router.get("/logout", (req, res) => {

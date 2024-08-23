@@ -40,7 +40,10 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-
+userSchema.pre("findOne", function(next){
+    this.populate("cart");
+    next();
+})
 
 const UserModel = new mongoose.model(usersCollection, userSchema);
 
