@@ -14,9 +14,28 @@
   {{/if}}
 </header>
 
-
 <h1>Productos</h1>
 
+<!-- Formulario de filtrado -->
+<form action="/products" method="GET">
+  <div>
+    <label for="category">Categoría:</label>
+    <input type="text" id="category" name="query" placeholder="Buscar por categoría" value="{{query}}">
+  </div>
+  <div>
+    <label for="minPrice">Precio Mínimo:</label>
+    <input type="number" id="minPrice" name="minPrice" placeholder="0" value="{{minPrice}}">
+  </div>
+  <div>
+    <label for="maxPrice">Precio Máximo:</label>
+    <input type="number" id="maxPrice" name="maxPrice" placeholder="1000" value="{{maxPrice}}">
+  </div>
+  <div>
+    <button type="submit">Aplicar filtros</button>
+  </div>
+</form>
+
+<!-- Lista de productos -->
 {{#each products}}
   <div>
     <h2>{{this.title}}</h2>
@@ -29,18 +48,19 @@
     </a>
     
     {{#if ../user}}
-      <button onclick="addToCart('{{this._id}}')">Agregar al carrito</button>
+      <button onclick="addToCart('{{this._id}}', '{{@root.user.cart_id}}')">Agregar al carrito</button>
     {{/if}}
   </div>
 {{/each}}
 
+<!-- Paginación -->
 <div style="margin-top: 10px;">
   {{#if hasPrevPage}}
-    <a href="/products?page={{prevPage}}">Anterior</a>
+    <a href="/products?page={{prevPage}}&query={{query}}&minPrice={{minPrice}}&maxPrice={{maxPrice}}&name={{name}}">Anterior</a>
   {{/if}}
   
   {{#if hasNextPage}}
-    <a href="/products?page={{nextPage}}">Siguiente</a>
+    <a href="/products?page={{nextPage}}&query={{query}}&minPrice={{minPrice}}&maxPrice={{maxPrice}}&name={{name}}">Siguiente</a>
   {{/if}}
 </div>
 
