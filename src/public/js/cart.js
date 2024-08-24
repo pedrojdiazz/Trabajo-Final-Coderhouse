@@ -43,7 +43,6 @@ function addToCart(productId, cartId) {
 
 
   function deleteFromCart(cartId, productId) {
-    console.log(cartId, productId);
     fetch(`/api/carts/${cartId}/products/${productId}`, {
       method: 'DELETE',
       headers: {

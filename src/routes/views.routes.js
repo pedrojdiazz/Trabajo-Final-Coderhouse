@@ -13,7 +13,6 @@ router.get("/realtimeproducts", async (req, res) => {
 router.get("/products", authHandler.optionalAuthMiddleware("jwt", { session: false }), async (req, res) => {
     try {
         const { page = 1, limit = 10, query, minPrice, maxPrice} = req.query;
-        console.log(page, limit, query, minPrice, maxPrice);
         const products = await ProductManager.getProducts({
             page: parseInt(page),
             limit: parseInt(limit),

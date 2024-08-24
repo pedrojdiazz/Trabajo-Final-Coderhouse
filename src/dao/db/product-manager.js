@@ -1,4 +1,5 @@
 import ProductModel from "../../models/products.model.js";
+import { normalizeString } from "../../utils.js";
 class ProductManager {
 
     async addProduct({ title, description, price, code, stock, category, thumbnails }) {
@@ -33,11 +34,9 @@ class ProductManager {
         try {
             let queryOptions = {};
             if (query) {
-                // Crear una expresión regular insensible a mayúsculas y acentos
-                const sanitizedQuery = query.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Elimina los acentos
-                queryOptions.category = new RegExp(sanitizedQuery, 'i'); // Búsqueda insensible a mayúsculas y acentos
+                const sanitizedQuery = normalizeString(query);
+                queryOptions.normalizedCategory = new RegExp(sanitizedQuery, 'i');
             }
-            
             if (minPrice || maxPrice) {
                 queryOptions.price = {};
                 if (minPrice) queryOptions.price.$gte = parseFloat(minPrice);
