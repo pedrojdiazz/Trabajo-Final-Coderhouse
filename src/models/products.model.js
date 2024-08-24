@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
-
+import { normalizeString } from "../utils.js";
 const productsCollection = "products";
 
 const productSchema = new mongoose.Schema({ 
@@ -44,11 +44,17 @@ const productSchema = new mongoose.Schema({
     thumbnails: {
         type: [String],
         default: []
-    }
+    },
+    normalizedCategory: String
 });
 
 
 productSchema.plugin(mongoosePaginate);
+
+productSchema.pre('save', function(next) {
+    this.normalizedCategory = normalizeString(this.category);
+    next();
+});
 
 const ProductModel = new mongoose.model(productsCollection, productSchema);
 

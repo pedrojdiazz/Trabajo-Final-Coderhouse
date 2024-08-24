@@ -1,6 +1,4 @@
-function addToCart(productId) {
-    const cartId = document.querySelector('.user-info a[href^="/carts"]').getAttribute('href').split('/')[2];
-    
+function addToCart(productId, cartId) {
     fetch(`/api/carts/${cartId}/products/${productId}`, {
       method: 'POST',
       headers: {
@@ -10,7 +8,7 @@ function addToCart(productId) {
     })
     .then(response => response.json())
     .then(data => {
-      const button = document.querySelector(`button[onclick="addToCart('${productId}')"]`);
+      const button = document.querySelector(`button[onclick="addToCart('${productId}', '${cartId}')"]`);
       const notification = document.createElement('div');
       notification.style.marginTop = '10px';
   
@@ -26,11 +24,10 @@ function addToCart(productId) {
   
       setTimeout(() => {
         notification.remove();
-      }, 3000);
+      }, 2000);
     })
     .catch(error => {
-      console.error('Error:', error);
-      const button = document.querySelector(`button[onclick="addToCart('${productId}')"]`);
+      const button = document.querySelector(`button[onclick="addToCart('${productId}', '${cartId}')"]`);
       const notification = document.createElement('div');
       notification.textContent = 'Error interno del servidor';
       notification.style.color = 'red';
@@ -40,12 +37,12 @@ function addToCart(productId) {
   
       setTimeout(() => {
         notification.remove();
-      }, 3000);
+      }, 2000);
     });
   }
 
+
   function deleteFromCart(cartId, productId) {
-    console.log(cartId, productId);
     fetch(`/api/carts/${cartId}/products/${productId}`, {
       method: 'DELETE',
       headers: {
