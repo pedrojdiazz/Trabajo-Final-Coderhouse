@@ -1,23 +1,23 @@
 <header>
   {{#if user}}
-    <div class="user-info">
-      <h2>Bienvenido, {{user.first_name}}</h2>
-      <a href="/profile">Mi Perfil</a>
-      <a href="/carts/{{user.cart_id}}">Mi Carrito</a>
-      <a href="/api/sessions/logout">Cerrar Sesión</a>
-    </div>
+  <div class="user-info">
+    <h2>Bienvenido, {{user.first_name}}</h2>
+    <a href="/profile">Mi Perfil</a>
+    <a href="/carts/{{user.cart_id}}">Mi Carrito</a>
+    <a href="/api/sessions/logout">Cerrar Sesión</a>
+  </div>
   {{else}}
-    <div class="auth-buttons">
-      <a href="/register"><button>Registrarse</button></a>
-      <a href="/login"><button>Iniciar Sesión</button></a>
-    </div>
+  <div class="auth-buttons">
+    <a href="/register"><button>Registrarse</button></a>
+    <a href="/login"><button>Iniciar Sesión</button></a>
+  </div>
   {{/if}}
 </header>
 
 <h1>Productos</h1>
 
 <!-- Formulario de filtrado -->
-<form action="/products" method="GET">
+<form action="/" method="GET">
   <div>
     <label for="category">Categoría:</label>
     <input type="text" id="category" name="query" placeholder="Buscar por categoría" value="{{query}}">
@@ -37,30 +37,30 @@
 
 <!-- Lista de productos -->
 {{#each products}}
-  <div>
-    <h2>{{this.title}}</h2>
-    <p>{{this.description}}</p>
-    <p>Precio: ${{this.price}}</p>
-    <p>Categoría: {{this.category}}</p>
-    
-    <a href="/products/{{this._id}}">
-      <button>Ver detalles</button>
-    </a>
-    
-    {{#if ../user}}
-      <button onclick="addToCart('{{this._id}}', '{{@root.user.cart_id}}')">Agregar al carrito</button>
-    {{/if}}
-  </div>
+<div>
+  <h2>{{this.title}}</h2>
+  <p>{{this.description}}</p>
+  <p>Precio: ${{this.price}}</p>
+  <p>Categoría: {{this.category}}</p>
+
+  <a href="/{{this._id}}">
+    <button>Ver detalles</button>
+  </a>
+
+  {{#if ../user}}
+  <button onclick="addToCart('{{this._id}}', '{{@root.user.cart_id}}')">Agregar al carrito</button>
+  {{/if}}
+</div>
 {{/each}}
 
 <!-- Paginación -->
 <div style="margin-top: 10px;">
   {{#if hasPrevPage}}
-    <a href="/products?page={{prevPage}}&query={{query}}&minPrice={{minPrice}}&maxPrice={{maxPrice}}&name={{name}}">Anterior</a>
+  <a href="/?page={{prevPage}}&query={{query}}&minPrice={{minPrice}}&maxPrice={{maxPrice}}&name={{name}}">Anterior</a>
   {{/if}}
-  
+
   {{#if hasNextPage}}
-    <a href="/products?page={{nextPage}}&query={{query}}&minPrice={{minPrice}}&maxPrice={{maxPrice}}&name={{name}}">Siguiente</a>
+  <a href="/?page={{nextPage}}&query={{query}}&minPrice={{minPrice}}&maxPrice={{maxPrice}}&name={{name}}">Siguiente</a>
   {{/if}}
 </div>
 

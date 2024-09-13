@@ -1,9 +1,9 @@
-import {fileURLToPath} from 'url';
-import { dirname } from 'path';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import configObject from './config/config.js';
 import passport from 'passport';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import configObject from './config/config.js';
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -16,34 +16,34 @@ export function normalizeString(str) {
 export class AuthHandler {
 
     #generateToken(user) {
-        const token = jwt.sign(user, configObject.JWT_SECRET, {expiresIn:'24h'});
+        const token = jwt.sign(user, configObject.JWT_SECRET, { expiresIn: '24h' });
         return token;
     }
 
     createUserToken(user, res) {
-        const userPayload = { cart_id: user.cart._id, email: user.email, role: user.role, age: user.age, first_name: user.first_name, last_name: user.last_name};
+        const userPayload = { cart_id: user.cart._id, email: user.email, role: user.role, age: user.age, first_name: user.first_name, last_name: user.last_name };
         const token = this.#generateToken(userPayload);
-        res.cookie('pepeCookieToken', token, { httpOnly: true, maxAge: 60*60*1000 })
-           .redirect("/profile");
-        }
+        res.cookie('pepeCookieToken', token, { httpOnly: true, maxAge: 60 * 60 * 1000 })
+            .redirect("/profile");
+    }
 
     passportCallMiddleware(strategy, options = {}) {
-            return async (req, res, next) => {
-                passport.authenticate(strategy, options, (error, user, info) => {
-                    if (error) {
-                        return next(error)
-                    }
-        
-                    if(!user) {
-                        return res.status(401).send({error: info.message ? info.message : info.toString() }); 
-                    }
-        
-                    req.user = user; 
-                    next(); 
-                })(req, res, next)
-        
-            }
+        return async (req, res, next) => {
+            passport.authenticate(strategy, options, (error, user, info) => {
+                if (error) {
+                    return next(error)
+                }
+
+                if (!user) {
+                    return res.status(401).send({ error: info.message ? info.message : info.toString() });
+                }
+
+                req.user = user;
+                next();
+            })(req, res, next)
+
         }
+    }
 
     optionalAuthMiddleware(strategy, options = {}) {
         return async (req, res, next) => {
@@ -51,7 +51,7 @@ export class AuthHandler {
                 if (error) {
                     return next(error);
                 }
-    
+
                 req.user = user || null;
                 next();
             })(req, res, next);
@@ -59,30 +59,30 @@ export class AuthHandler {
     }
 
     authorizationMiddleware(role) {
-            return async (req, res, next) => {
-                if(req.user.role !== role) { 
-                    return res.status(403).send({error: "No tenes permiso para ingresar"}); 
-                }
-                next();
+        return async (req, res, next) => {
+            if (req.user.role !== role) {
+                return res.status(403).send({ error: "No tenes permiso para ingresar" });
             }
+            next();
         }
+    }
 
 }
 
 
 export class PassportTools {
-    
-    createHash(password){
+
+    createHash(password) {
         return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
     }
-    
+
     isValidPassword(user, password) {
         return bcrypt.compareSync(password, user.password)
-    } 
+    }
 
     cookieExtractor(req) {
         let token;
-        if (req && req.cookies) {  
+        if (req && req.cookies) {
             token = req.cookies['pepeCookieToken']
         }
         return token;
