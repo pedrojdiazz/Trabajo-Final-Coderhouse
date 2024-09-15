@@ -1,17 +1,17 @@
 <h1>Carrito de Compras</h1>
 {{#each products}}
-  <div>
-    <p>Producto: {{this.product.title}}</p>
-    <p>Precio: ${{this.product.price}}</p>
-    <p>Descripción: {{this.product.description}}</p>
-    <p>Cantidad: {{this.quantity}}</p>
-    <button onclick="deleteFromCart('{{@root.cartId}}', '{{this.product._id}}')">Eliminar del carrito</button>
-    <br>
-  </div>
+<div>
+  <p>Producto: {{this.product.title}}</p>
+  <p>Precio: ${{this.product.price}}</p>
+  <p>Descripción: {{this.product.description}}</p>
+  <p>Cantidad: {{this.quantity}}</p>
+  <button onclick="deleteFromCart('{{@root.cartId}}', '{{this.product._id}}')">Eliminar del carrito</button>
+  <br>
+</div>
 {{/each}}
 
 <div style="margin-top: 20px;">
-  <a href="/products">
+  <a href="/">
     <button>Volver a Productos</button>
   </a>
 </div>

@@ -1,25 +1,25 @@
 <h1>Mi perfil</h1>
 <div class="profile-container">
     <h2>Información personal</h2>
-    <p><strong>Nombre:</strong> {{user.first_name}} {{user.last_name}}</p>
+    <p><strong>Nombre:</strong> {{user.fullname}}</p>
     <p><strong>Email:</strong> {{user.email}}</p>
     <p><strong>Edad:</strong> {{user.age}}</p>
-    
+
     <h2>Mi Carrito:</h2>
     {{#if user.cart.length}}
-        <div class="cart-items">
-            {{#each user.cart}}
-            <div class="cart-item">
-                <p class="product-name">{{this.product}}</p>
-                <p class="product-quantity">Cantidad: {{this.quantity}}</p>
-            </div>
-            {{/each}}
+    <div class="cart-items">
+        {{#each user.cart}}
+        <div class="cart-item">
+            <p class="product-name">{{this.product}}</p>
+            <p class="product-quantity">Cantidad: {{this.quantity}}</p>
         </div>
+        {{/each}}
+    </div>
     {{else}}
-        <p>Tu carrito está vacío.</p>
+    <p>Tu carrito está vacío.</p>
     {{/if}}
-    
+
     <button onclick="location.href='/api/sessions/logout'">Cerrar sesión</button>
-    <button onclick="location.href='/products'">Ver productos</button>
+    <button onclick="location.href='/'">Ver productos</button>
     <button onclick="location.href='/carts/{{user.cart_id}}'">Ver mi carrito</button>
 </div>
