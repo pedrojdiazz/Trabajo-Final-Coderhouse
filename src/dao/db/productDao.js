@@ -100,5 +100,17 @@ class ProductDao {
             throw error;
         }
     }
+
+    async substractStock(productId, quantity) {
+        try {
+            const product = await ProductModel.findById(productId);
+            product.stock -= quantity;
+            await product.save();
+            return 1;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
+
 export default new ProductDao();

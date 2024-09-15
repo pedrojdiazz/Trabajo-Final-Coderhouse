@@ -9,8 +9,8 @@ class CartController {
 
         } catch (error) {
             res.status(500).json({
-                error: "Error interno del servidor" + error.message,
-                message: error
+                error: "Error al crear el carrito",
+                message: error.message
             });
         }
     }
@@ -27,8 +27,8 @@ class CartController {
             }
         } catch (error) {
             res.status(500).json({
-                error: "Error interno del servidor" + error.message,
-                message: error
+                error: "Error al obtener el carrito",
+                message: error.message
             });
         }
     }
@@ -43,15 +43,15 @@ class CartController {
             if (cart == -1) {
                 res.status(404).json({ message: `Producto con el ID ${pid} no encontrado` })
             } else if (!cart) {
-                res.status(404).json({ message: `Carrito con el ID ${cid} no encontrado` })
+                res.status(404).json({ message: `No se pudo agregar el producto al carrito, revisar stock disponible` })
             } else {
                 res.status(200).json({ message: "Producto agregado al carrito" })
 
             }
         } catch (error) {
             res.status(500).json({
-                error: "Error interno del servidor" + error.message,
-                message: error
+                error: "Error  al agregar producto al carrito",
+                message: error.message
             });
         }
     }
@@ -71,8 +71,8 @@ class CartController {
             }
         } catch (error) {
             res.status(500).json({
-                error: "Error interno del servidor" + error.message,
-                message: error
+                error: "Error al borrar el producto del carrito",
+                message: error.message
             });
         }
     }
@@ -93,8 +93,8 @@ class CartController {
             }
         } catch (error) {
             res.status(500).json({
-                error: "Error interno del servidor" + error.message,
-                message: error
+                error: "Error al agregar los productos al carrito",
+                message: error.message
             });
         }
     }
@@ -106,8 +106,8 @@ class CartController {
             res.status(200).json({ message: "Carrito vaciado" });
         } catch (error) {
             res.status(500).json({
-                error: "Error interno del servidor" + error.message,
-                message: error
+                error: "Error al limpiar el carrito",
+                message: error.message
             });
         }
     }

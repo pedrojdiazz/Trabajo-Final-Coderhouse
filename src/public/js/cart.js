@@ -58,7 +58,6 @@ function deleteFromCart(cartId, productId) {
       }
     })
     .catch(error => {
-      console.error('Error:', error);
       alert('Error interno del servidor', error);
     });
 }

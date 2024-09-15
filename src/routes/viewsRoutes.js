@@ -1,7 +1,7 @@
 import { Router } from "express";
 import CartDao from "../dao/db/cartDao.js";
 import ProductDao from "../dao/db/productDao.js";
-import { AuthHandler } from "../utils.js";
+import { AuthHandler } from "../middlewares/auth.js";
 
 const authHandler = new AuthHandler();
 const router = Router()
@@ -27,8 +27,8 @@ router.get("/carts/:cid", async (req, res) => {
         res.render("carts", { products: productsInCart, cartId: cartId });
     } catch (error) {
         res.status(500).json({
-            error: "Error interno del servidor" + error.message,
-            message: error
+            error: "Error al cargar el carrito",
+            message: error.message
         });
     }
 });
@@ -58,8 +58,8 @@ router.get("/profile", authHandler.passportCallMiddleware("jwt", { session: fals
 
     } catch (error) {
         res.status(500).json({
-            error: "Error interno del servidor" + error.message,
-            message: error
+            error: "Error al cargar el perfil",
+            message: error.message
         });
     }
 });
@@ -93,8 +93,8 @@ router.get("/", authHandler.optionalAuthMiddleware("jwt", { session: false }), a
 
     } catch (error) {
         res.status(500).json({
-            error: "Error interno del servidor" + error.message,
-            message: error
+            error: "Error interno del servidor",
+            message: error.message
         });
     }
 
@@ -108,7 +108,10 @@ router.get("/:pid", async (req, res) => {
 
         res.render("product-details", { product });
     } catch (error) {
-        res.status(500).json({ message: "Error interno del servidor" + error });
+        res.status(500).json({
+            error: "Error al obtener los detalles del producto",
+            message: error.message
+        });
     }
 });
 export default router;

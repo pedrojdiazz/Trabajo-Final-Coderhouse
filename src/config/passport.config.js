@@ -2,8 +2,8 @@ import passport from "passport";
 import jwt from "passport-jwt";
 import local from "passport-local";
 import configObject from '../config/config.js';
+import { PassportTools } from '../middlewares/auth.js';
 import UserService from "../services/userService.js";
-import { PassportTools } from '../utils.js';
 
 const passportTools = new PassportTools();
 const LocalStrategy = local.Strategy;

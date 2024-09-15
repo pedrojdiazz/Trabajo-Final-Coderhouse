@@ -1,27 +1,24 @@
-import { AuthHandler } from "../utils.js";
+import { AuthHandler } from "../middlewares/auth.js";
 
 const authHandler = new AuthHandler();
 
 class SessionController {
-    constructor() {
-        this.authHandler = new AuthHandler();
-    }
 
     register(req, res) {
         try {
-            this.authHandler.createUserToken(req.user, res);
+            authHandler.createUserToken(req.user, res);
         } catch (error) {
-            res.status(500).json({ message: 'Error en el registro', error });
+            res.status(500).json({ message: 'Error en el registro', error: error.message });
         }
     }
 
     login(req, res) {
         try {
-            this.authHandler.createUserToken(req.user, res);
+            authHandler.createUserToken(req.user, res);
         } catch (error) {
             res.status(500).json({
-                error: "Error interno del servidor" + error.message,
-                message: error
+                error: "Error en el login",
+                message: error.message
             });
         }
     }

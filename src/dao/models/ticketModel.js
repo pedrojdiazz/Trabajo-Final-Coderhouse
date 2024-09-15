@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import AutoIncrement from "mongoose-sequence";
 
 const ticketsCollection = "tickets";
 
@@ -10,7 +9,6 @@ const ticketSchema = new mongoose.Schema({
     },
     purchase_datetime: {
         type: Date,
-        required: true,
         default: Date.now
 
     },
@@ -25,6 +23,19 @@ const ticketSchema = new mongoose.Schema({
 
 });
 
-mongoose.plugin(AutoIncrement, { inc_field: 'code' });
+ticketSchema.pre('save', function (next) {
+    if (!this.code) {
+        this.code = generateUniqueTicketCode();
+    }
+    next();
+});
+
+function generateUniqueTicketCode() {
+    const timestamp = Date.now().toString();
+    const randomValue = crypto.randomBytes(4).toString('hex');
+    return `${timestamp}-${randomValue}`;
+}
 
 const TicketModel = new mongoose.model(ticketsCollection, ticketSchema);
+
+export default TicketModel; 

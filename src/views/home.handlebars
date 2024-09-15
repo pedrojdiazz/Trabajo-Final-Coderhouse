@@ -1,7 +1,7 @@
 <header>
   {{#if user}}
   <div class="user-info">
-    <h2>Bienvenido, {{user.first_name}}</h2>
+    <h2>Bienvenido, {{user.fullname}}</h2>
     <a href="/profile">Mi Perfil</a>
     <a href="/carts/{{user.cart_id}}">Mi Carrito</a>
     <a href="/api/sessions/logout">Cerrar Sesión</a>
@@ -42,6 +42,7 @@
   <p>{{this.description}}</p>
   <p>Precio: ${{this.price}}</p>
   <p>Categoría: {{this.category}}</p>
+  <p>Stock: {{this.stock}}</p>
 
   <a href="/{{this._id}}">
     <button>Ver detalles</button>

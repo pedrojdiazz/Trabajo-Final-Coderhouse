@@ -12,7 +12,7 @@ class CartService {
 
     async addProductToCart(cid, pid, quantity = 1) {
         const product = await ProductDao.getProductById(pid);
-        if (!product) {
+        if (!product || product.stock < quantity) {
             return null;
         }
 

@@ -8,14 +8,14 @@ class ProductController {
             if (!success) {
                 res.status(400).json({ message: "El producto ya se encuentra cargado" });
             } else if (success === -1) {
-                res.status(400).json({ message: "Error, faltan campos por agregar" });
+                res.status(400).json({ message: "Error con los campos introducidos" });
             } else {
                 res.status(201).json({ message: "Producto agregado exitosamente" });
             }
         } catch (error) {
             res.status(500).json({
-                error: "Error interno del servidor" + error.message,
-                message: error,
+                error: "Error al crear el producto",
+                message: error.message
             });
         }
     }
@@ -30,7 +30,7 @@ class ProductController {
             });
         } catch (error) {
             res.status(500).json({
-                error: "Error interno del servidor",
+                error: "Error al obtener los productos",
                 message: error.message,
             });
         }
@@ -50,8 +50,8 @@ class ProductController {
             }
         } catch (error) {
             res.status(500).json({
-                error: "Error interno del servidor",
-                message: error.message,
+                error: "Error al obtener el producto",
+                message: error.message
             });
         }
     }
@@ -70,8 +70,8 @@ class ProductController {
             }
         } catch (error) {
             res.status(500).json({
-                error: "Error interno del servidor",
-                message: error.message,
+                error: "Error al actualizar el producto",
+                message: error.message
             });
         }
     }
@@ -89,8 +89,8 @@ class ProductController {
             }
         } catch (error) {
             res.status(500).json({
-                error: "Error interno del servidor",
-                message: error.message,
+                error: "Error al borrar el producto",
+                message: error.message
             });
         }
     }

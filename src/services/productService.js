@@ -2,9 +2,10 @@ import ProductDao from "../dao/db/productDao.js";
 import { ProductDTO, ProductQueryDTO } from "../dto/productDto.js";
 
 class ProductService {
+
     async addProduct({ title, description, price, productCode, stock, category, thumbnails }) {
         if (!title || !description || !price || !productCode || !stock || !category) return -1;
-
+        if (stock < 0 || price < 0) return -1;
         const existProduct = await ProductDao.findProduct(code, productCode)
         if (existProduct) return null;
         const newProduct = new ProductDTO(title, description, price, productCode, stock, category, thumbnails)
@@ -31,6 +32,11 @@ class ProductService {
 
     async deleteProduct(productId) {
         return ProductDao.deleteProduct(productId)
+    }
+
+    async substractStock(productId, quantity) {
+        if (quantity < 0) return -1
+        return ProductDao.substractStock(productId, quantity)
     }
 }
 
