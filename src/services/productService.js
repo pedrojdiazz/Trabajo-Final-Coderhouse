@@ -35,9 +35,8 @@ class ProductService {
     }
 
     async substractStock(productId, quantity) {
-        if (quantity < 0) return -1
         return ProductDao.substractStock(productId, quantity)
     }
 }
 
-export default ProductService;
+export default new ProductService();

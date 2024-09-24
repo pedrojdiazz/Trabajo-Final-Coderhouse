@@ -1,6 +1,8 @@
 import { Router } from "express";
 import CartController from "../controllers/cartController.js";
+
 import { AuthHandler } from "../middlewares/auth.js";
+import TicketController from "../controllers/ticketController.js";
 
 const authHandler = new AuthHandler();
 
@@ -22,6 +24,10 @@ router.put('/:cid', CartController.addProductListToCart);
 
 router.delete('/:cid', CartController.clearCart);
 
-router.get('/:cid/purchase', authHandler.passportCallMiddleware("jwt", { session: false }))
+router.get('/:cid/purchase', authHandler.passportCallMiddleware("jwt", { session: false }),
+    authHandler.authorizationMiddleware("user"),
+    TicketController.createTicket);
+
+
 
 export default router;

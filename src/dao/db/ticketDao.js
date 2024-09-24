@@ -1,11 +1,13 @@
-import TicketModel from "../models/ticketModel";
+import TicketModel from "../models/ticketModel.js";
 
 class TicketDao {
-    async createTicket(ticket) {
-        const ticket = new TicketModel({
-            amount: ticket.amount,
-            purchaser: ticket.purchaser
+    async createTicket(amount, purchaser) {
+        const newTicket = new TicketModel({
+            amount: amount,
+            purchaser: purchaser
         });
+        await newTicket.save();
+        return newTicket;
 
     }
 }

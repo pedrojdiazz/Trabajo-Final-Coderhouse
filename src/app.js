@@ -38,7 +38,7 @@ const httpServer = app.listen(PORT, () => {
     console.log(`Servidor escuchando en puerto ${PORT}`)
 })
 
-const io = new Server(httpServer);
+// const io = new Server(httpServer);
 
 // io.on("connection", async (socket) => {
 //     const products = await ProductDao.getProducts();

@@ -13,7 +13,7 @@ export class AuthHandler {
     }
 
     createUserToken(user, res) {
-
+        console.log(user);
         const userPayload = new UserDTO({
             cart_id: user.cart._id,
             email: user.email,
@@ -22,6 +22,7 @@ export class AuthHandler {
             first_name: user.first_name,
             last_name: user.last_name
         });
+        
         const token = this.#generateToken({
             cart_id: userPayload.cart_id,
             email: userPayload.email,

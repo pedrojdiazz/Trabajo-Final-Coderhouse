@@ -110,7 +110,9 @@ class ProductDao {
         } catch (error) {
             throw error;
         }
-    }
+    } 
+    
+    
 }
 
 export default new ProductDao();

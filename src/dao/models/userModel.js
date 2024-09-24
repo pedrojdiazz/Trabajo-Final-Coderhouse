@@ -42,6 +42,6 @@ userSchema.pre("findOne", function (next) {
     next();
 })
 
-const UserModel = new mongoose.model(usersCollection, userSchema);
+const UserModel = mongoose.model(usersCollection, userSchema);
 
 export default UserModel

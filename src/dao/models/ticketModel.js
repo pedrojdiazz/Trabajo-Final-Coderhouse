@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
+import crypto from 'crypto';
 
 const ticketsCollection = "tickets";
 
 const ticketSchema = new mongoose.Schema({
     code: {
         type: String,
-        required: true
     },
     purchase_datetime: {
         type: Date,
@@ -36,6 +36,6 @@ function generateUniqueTicketCode() {
     return `${timestamp}-${randomValue}`;
 }
 
-const TicketModel = new mongoose.model(ticketsCollection, ticketSchema);
+const TicketModel = mongoose.model(ticketsCollection, ticketSchema);
 
 export default TicketModel; 
